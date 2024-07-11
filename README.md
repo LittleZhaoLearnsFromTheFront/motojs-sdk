@@ -1,5 +1,4 @@
 # 上报参数类型
-
 ```typescript
 type BaseSendInfo={
   type:string,
@@ -7,17 +6,23 @@ type BaseSendInfo={
 }
 
 type Error=BaseSendInfo & {
+  // 资源加载错误
   resource_msg?: string,
+  // 代码执行错误
   err_info?: IAnyObject
 }
 
 type Request = BaseSendInfo & {
     method: string,
+    //请求地址
     request_url: string,
+    //状态码
     status: number,
     ok: boolean,
+    //超时或跨域提示
     message?: string,
     err?: any
+    //post请求body传参
     body?: any
 }
 
@@ -32,10 +37,15 @@ type HistoryRoute = BaseSendInfo & {
 }
 
 type Performance = BaseSendInfo & {
+    // 白屏时间
     FP: string,
+    // 首次渲染时间
     FCP: string,
+    // 渲染元素最长时间
     LCP: string,
+    // 浏览器宽度
     browserWidth: number,
+    // 浏览器高度
     browserHeight: number
 }
 

@@ -28,10 +28,22 @@ export class IndexedDBCache {
     private initDB() {
         const indexedDB = this.indexedDB
         if (!indexedDB) return
+        const createTable = (db: IDBDatabase) => {
+            if (!db.objectStoreNames.contains(this.tableName)) {
+                const objectStore = db.createObjectStore(this.tableName, this.keyPath ? {
+                    keyPath: this.keyPath,
+                } : { autoIncrement: true });
+                this.indexs.forEach(element => {
+                    // 三个参数分别为索引名称、索引所在的属性、配置对象（说明该属性是否包含重复的值）
+                    objectStore.createIndex(element.name, element.name, { unique: element.unique });
+                });
+            }
+        }
         return new Promise((resolve, reject) => {
             const openRequest = indexedDB.open(this.dbName, this.dbversion)
             openRequest.onsuccess = () => {
                 this.db = openRequest.result
+                createTable(this.db)
                 console.log('open indexedDB success!!!');
                 resolve('success')
             }
@@ -42,15 +54,7 @@ export class IndexedDBCache {
             }
             openRequest.onupgradeneeded = (event) => {
                 const db = (event?.target as any)?.result
-                if (!db.objectStoreNames.contains(this.tableName)) {
-                    const objectStore = db.createObjectStore(this.tableName, this.keyPath ? {
-                        keyPath: this.keyPath,
-                    } : { autoIncrement: true });
-                    this.indexs.forEach(element => {
-                        // 三个参数分别为索引名称、索引所在的属性、配置对象（说明该属性是否包含重复的值）
-                        objectStore.createIndex(element.name, element.name, { unique: element.unique });
-                    });
-                }
+                createTable(db)
                 resolve('upgradeneeded indexedDB sucess!!!');
             }
         });

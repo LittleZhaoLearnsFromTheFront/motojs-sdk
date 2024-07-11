@@ -27,7 +27,7 @@ export class BrowserTransport extends BaseTransport {
                     return
                 }
                 if (type === 'request') {
-                    this.request(safeStringify, method)
+                    this.request(stringifyData, method)
                 }
                 console.error('type is not inludes ["image","sendBeacon","request"]');
                 return
