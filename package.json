@@ -1,0 +1,35 @@
+{
+  "name": "motojs-sdk",
+  "private": false,
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.mjs",
+  "type": "module",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "homepage": "https://github.com/LittleZhaoLearnsFromTheFront",
+  "scripts": {
+    "build": "unbuild",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "sdk",
+    "前端监控",
+    "javaScript",
+    "typeScript"
+  ],
+  "author": "zhaohx0409@163.com",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "unbuild": "^2.0.0"
+  },
+  "dependencies": {
+    "source-map": "^0.7.4"
+  }
+}
