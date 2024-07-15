@@ -89,7 +89,8 @@ export class BrowserBreadcrumb extends BaseBreadcrumb {
     private init() {
         if (!this.isLeaveReport) return
         if (!('addEventListener' in _global)) return
-        on(_global, 'beforeunload', async () => {
+
+        const beforeunloadHandler = async () => {
             const db = this.db
             const loc = this.loc
             let data: any[] = []
@@ -104,6 +105,7 @@ export class BrowserBreadcrumb extends BaseBreadcrumb {
             }
             if (!data.length) return
             this.report(data)
-        })
+        }
+        on(_global, 'beforeunload', beforeunloadHandler)
     }
 }

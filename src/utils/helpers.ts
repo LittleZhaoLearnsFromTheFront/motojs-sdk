@@ -5,6 +5,13 @@ export const on = (target: { addEventListener: Function },
     target.addEventListener(eventName, handler, opitons)
 }
 
+export const off = (target: { removeEventListener: Function },
+    eventName: keyof WindowEventMap,
+    handler: Function,
+    opitons: boolean | unknown = false) => {
+    target.removeEventListener(eventName, handler, opitons)
+}
+
 export const getLocationHref = (): string => {
     if (typeof document === 'undefined' || document.location == null) return ''
     return document.location.href

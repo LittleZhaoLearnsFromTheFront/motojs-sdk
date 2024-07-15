@@ -41,9 +41,9 @@ export abstract class BaseClient<T extends BaseOptionsType = BaseOptionsType> im
         plugins.forEach(it => {
             if (!it.name) return
             if (!this.isPluginEnable(it.name)) return
-            const handler = (data: any) => {
+            const handler = (data: any, name: any) => {
                 const newData = it.transform.call(this, data)
-                it.consumer.call(this, newData)
+                it.consumer.call(this, typeof newData === 'object' ? { type: name, ...(newData || {}) } : { type: name, data: newData })
             }
             it.once ? subscribe.once(it.name, handler) : subscribe.sub(it.name, handler)
             it.monitor.call(this, subscribe.pub.bind(subscribe))

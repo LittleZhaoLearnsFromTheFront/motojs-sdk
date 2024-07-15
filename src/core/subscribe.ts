@@ -1,10 +1,10 @@
 import { nativeTryCatch } from "../utils"
-type MonitorCallback = (data: any) => void
+type MonitorCallback<T> = (data: any, name: T) => void
 
 export class Subscribe<T> {
-    private list: Map<T, MonitorCallback[]> = new Map()
+    private list: Map<T, MonitorCallback<T>[]> = new Map()
 
-    sub(name: T, handler: MonitorCallback) {
+    sub(name: T, handler: MonitorCallback<T>) {
         const list = this.list
         if (!list.has(name)) {
             list.set(name, [handler])
@@ -22,14 +22,14 @@ export class Subscribe<T> {
         }
         nativeTryCatch(() => {
             handlers.forEach(t => {
-                t(data)
+                t(data, name)
             })
         })
     }
 
-    once(name: T, handler: MonitorCallback) {
-        const newHandler: MonitorCallback = (data: any) => {
-            handler(data)
+    once(name: T, handler: MonitorCallback<T>) {
+        const newHandler: MonitorCallback<T> = (data: any) => {
+            handler(data, name)
             this.clear(name, newHandler)
         }
         const list = this.list
@@ -41,7 +41,7 @@ export class Subscribe<T> {
         list.set(name, [...curList, newHandler])
     }
 
-    clear(name: T, handler: MonitorCallback) {
+    clear(name: T, handler: MonitorCallback<T>) {
         if (!this.list.has(name)) {
             return
         }

@@ -42,14 +42,22 @@ const resourceTransform = (target: ResourceErrorTarget): ErrorType => {
 
 const codeErrorTransform = (errorEvent: ErrorEvent): ErrorType => {
     const { message, filename, lineno, colno, error } = errorEvent
+    const firstStack: string = error.stack.split('at')[1]
+    const reg = /\(.*?\)/
+    const fomratFirstStack = firstStack.match(reg)?.[0].slice(1, -1).split(':')
+    const newFilename = fomratFirstStack?.slice(0, -2)?.join(":") || filename
+    const formatLineno = Number(fomratFirstStack?.[fomratFirstStack.length - 2])
+    const formatColno = Number(fomratFirstStack?.[fomratFirstStack.length - 1])
+    const newLineno = formatLineno || lineno
+    const newColno = formatColno || colno
     return {
         type: `exec-${BrowserEventType.Error}`,
         name: '代码执行错误',
         err_info: {
             message,
-            filename,
-            lineno,
-            colno,
+            filename: newFilename,
+            lineno: newLineno,
+            colno: newColno,
             error
         }
     }
