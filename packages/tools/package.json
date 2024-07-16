@@ -1,10 +1,10 @@
 {
-  "name": "@motojs_sdk/types",
+  "name": "@motojs_sdk/tools",
   "private": false,
   "version": "1.1.0",
   "description": "",
-  "main": "dist/packages/types/src/index.mjs",
-  "types": "dist/packages/types/src/index.d.ts",
+  "main": "dist/packages/tools/src/index.cjs",
+  "types": "dist/packages/tools/src/index.d.ts",
   "type": "module",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
@@ -19,11 +19,8 @@
     "前端监控",
     "javaScript",
     "typeScript",
-    "types"
+    "tools"
   ],
   "author": "zhaohx0409@163.com",
-  "license": "ISC",
-  "dependencies": {
-    "@motojs_sdk/core": "1.1.0"
-  }
+  "license": "ISC"
 }
