@@ -1,18 +1,16 @@
 {
+  "name": "@motojs_sdk/types",
   "private": false,
   "version": "1.0.3",
   "description": "",
+  "main": "dist/packages/types/src/index.mjs",
+  "types": "dist/packages/types/src/index.d.ts",
   "type": "module",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"
   },
   "homepage": "https://github.com/LittleZhaoLearnsFromTheFront",
-  "scripts": {
-    "build": "./scripts/build.js",
-    "version": "./scripts/version.js",
-    "release": "./scripts/release.js"
-  },
   "files": [
     "dist"
   ],
@@ -20,16 +18,12 @@
     "sdk",
     "前端监控",
     "javaScript",
-    "typeScript"
+    "typeScript",
+    "types"
   ],
   "author": "zhaohx0409@163.com",
   "license": "ISC",
-  "devDependencies": {
-    "@types/minimist": "^1.2.5",
-    "@types/node": "^20.11.24",
-    "minimist": "^1.2.8",
-    "prompts": "^2.4.2",
-    "unbuild": "^2.0.0",
-    "zx": "^8.1.4"
+  "dependencies": {
+    "@motojs_sdk/core": "1.0.3"
   }
 }

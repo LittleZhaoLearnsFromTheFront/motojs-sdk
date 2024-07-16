@@ -1,7 +1,9 @@
 {
-  "include": ["build.config.ts", "src"],
+  "include": [
+    "rollup.config.js",
+    "packages"
+  ],
   "compilerOptions": {
-    "outDir": "dist",
     "target": "ES2022",
     "module": "ES2020",
     "moduleResolution": "bundler",
@@ -11,6 +13,21 @@
     "sourceMap": false,
     "noUnusedLocals": true,
     "esModuleInterop": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "baseUrl": "./",
+    "paths": {
+      "@motojs_sdk/core": [
+        "packages/core/src"
+      ],
+      "@motojs_sdk/types": [
+        "packages/types/src"
+      ],
+      "@motojs_sdk/shared": [
+        "packages/shared/src"
+      ],
+      "@motojs_sdk/utils": [
+        "packages/utils/src"
+      ],
+    }
   }
 }
