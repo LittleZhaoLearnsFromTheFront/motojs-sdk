@@ -21,7 +21,12 @@ class MotojsSDKPlugin {
             }
             const list = glob.sync(path.join(outPath, `./**/*.{js.map,}`))
             for (let file of list) {
-                await upload(this.options.dsn, file, this.options.fields)
+                try {
+                    await upload(this.options.dsn, file, this.options.fields)
+                    console.log('uploadMap:', file)
+                } catch {
+                    console.log('error:', file)
+                }
             }
             next()
         })

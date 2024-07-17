@@ -22,7 +22,12 @@ const viteMotojsSDK = (options: Options) => {
             }
             const list = glob.sync(path.join(outPath, `./**/*.{js.map,}`))
             for (let file of list) {
-                await upload(options.dsn, file, options.fields)
+                try {
+                    await upload(options.dsn, file, options.fields)
+                    console.log('uploadMap:', file)
+                } catch {
+                    console.log('error:', file);
+                }
             }
         }
 

@@ -3,7 +3,6 @@ import http from "http"
 import fs from "fs"
 export const upload = async (dsn: string, file: string, fields: string) => {
     return new Promise((resolve) => {
-        console.log('uploadMap:', file)
         const req = http.request(
             `${dsn}?${fields}=${path.basename(file)}`,
             {

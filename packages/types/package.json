@@ -1,7 +1,7 @@
 {
   "name": "@motojs_sdk/types",
   "private": false,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "main": "dist/packages/types/src/index.mjs",
   "types": "dist/packages/types/src/index.d.ts",
@@ -24,6 +24,6 @@
   "author": "zhaohx0409@163.com",
   "license": "ISC",
   "dependencies": {
-    "@motojs_sdk/core": "1.1.0"
+    "@motojs_sdk/core": "1.1.1"
   }
 }
