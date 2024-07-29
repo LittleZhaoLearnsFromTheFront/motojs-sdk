@@ -9,6 +9,7 @@ export default defineBuildConfig({
   entries: [entrie],
   outDir: outDir,
   clean: true,
+  externals: ['react'],
   rollup: {
     emitCJS: true,
     inlineDependencies: true,

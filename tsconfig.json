@@ -14,6 +14,7 @@
     "noUnusedLocals": true,
     "esModuleInterop": true,
     "noImplicitAny": false,
+    "jsx": "react-jsx",
     "baseUrl": "./",
     "paths": {
       "@motojs_sdk/core": [
@@ -28,6 +29,12 @@
       "@motojs_sdk/utils": [
         "packages/utils/src"
       ],
+      "@motojs_sdk/browser": [
+        "packages/browser/src"
+      ],
+      "@motojs_sdk/react": [
+        "packages/react/src"
+      ]
     }
   }
 }

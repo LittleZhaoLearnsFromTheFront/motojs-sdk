@@ -23,8 +23,12 @@ async function run() {
             error.push(pkgName)
             continue;
         }
-        await $({ cwd: pkgPath, stdio: ['inherit', 'inherit', 'inherit'] })`npm publish`
-        success.push(pkgName)
+        try {
+            await $({ cwd: pkgPath, stdio: ['inherit', 'inherit', 'inherit'] })`npm publish`
+            success.push(pkgName)
+        } catch {
+            error.push(pkgName)
+        }
     }
     if (error.length) {
         console.error(`publish error : ${error.join('、')}`);
