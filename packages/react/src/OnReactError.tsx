@@ -1,31 +1,34 @@
-import { Component, ReactNode, useContext } from "react";
-import { SDKContext } from ".";
+import { Component, ReactNode } from "react";
 import { Plugin } from "@motojs_sdk/types";
+import { ResultType } from "./types";
+
 
 class OnReactError extends Component<{
     children: ReactNode;
+    browser: ResultType
 }> {
     constructor(props: any) {
         super(props);
     }
-    static browser = useContext(SDKContext).browser
-    componentDidCatch(error) {
+    componentDidCatch(error: any, { componentStack }) {
+        const { browser } = this.props;
         const Plugin: Plugin = {
             once: true,
             name: "react",
             monitor(notify) {
                 notify("react", {
-                    error
+                    error,
+                    componentStack
                 })
             },
             transform(data) {
                 return data;
             },
             consumer(transformedData) {
-                OnReactError.browser?.transport?.send(transformedData)
+                browser?.transport?.send(transformedData)
             }
         }
-        OnReactError.browser?.addPlugins(Plugin)
+        browser?.addPlugins(Plugin)
     }
     render() {
         const { children } = this.props

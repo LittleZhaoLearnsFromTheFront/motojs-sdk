@@ -1,30 +1,26 @@
 import { init } from "@motojs_sdk/browser"
-import { FunctionParams } from "@motojs_sdk/types"
-import { FC, ReactNode, createContext } from "react"
+import { FC, ReactNode, createContext, createElement } from "react"
 import OnReactError from "./OnReactError"
+import { Args, ResultType } from "./types"
 
-type ResultType = ReturnType<typeof init>
-type Args = FunctionParams<typeof init> | ResultType
 
 const SDKContext = createContext<{ browser: ResultType | null }>({ browser: null })
 const SDKProvider: FC<{
     theme: Args,
+    onError?: boolean
     children: ReactNode
-}> = ({ theme, children }) => {
+}> = ({ theme, children, onError = true }) => {
     let browser: ResultType
     if (Array.isArray(theme)) {
         browser = init(...theme)
     } else {
         browser = theme
     }
-    return (
-        <SDKContext.Provider value={{ browser: browser }}>
-            {children}
-        </SDKContext.Provider>
+    return createElement(
+        SDKContext.Provider,
+        { value: { browser } },
+        onError ? createElement(OnReactError, { browser }, children) : children
     )
 }
-
-SDKProvider.prototype.OnReactError = OnReactError
-
 
 export { SDKProvider, SDKContext }

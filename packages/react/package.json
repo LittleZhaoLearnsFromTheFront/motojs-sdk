@@ -1,6 +1,6 @@
 {
   "name": "@motojs_sdk/react",
-  "version": "1.2.0",
+  "version": "1.2.3",
   "description": "",
   "main": "dist/packages/react/src/index.mjs",
   "types": "dist/packages/react/src/index.d.ts",
@@ -33,7 +33,7 @@
     "url": "https://github.com/LittleZhaoLearnsFromTheFront/motojs-sdk/issues"
   },
   "dependencies": {
-    "@motojs_sdk/browser": "1.2.0"
+    "@motojs_sdk/browser": "1.2.3"
   },
   "peerDependencies": {
     "react": ">=16.8.0"

@@ -11,10 +11,8 @@
     ])
     const App = () => {
         return (
-            <SDKProvider theme={browser} >
-                <SDKProvider.OnReactError>
+            <SDKProvider theme={browser} onError={true} >
                     <div>测试</div>
-                </SDKProvider.OnReactError>
             </SDKProvider>
         )
     }
