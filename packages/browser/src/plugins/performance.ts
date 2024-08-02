@@ -1,5 +1,5 @@
-import {  BrowserEventType, PerformanceType } from "../types";
-import {Plugin} from "@motojs_sdk/types"
+import { BrowserEventType, PerformanceType } from "../types";
+import { Plugin } from "@motojs_sdk/types"
 import { targetHasUnknow } from "@motojs_sdk/utils";
 import { BrowserClient } from "../browserClient";
 
@@ -33,8 +33,6 @@ export const performance_plugin: Plugin<BrowserClient> = {
                 if (!entryMapValue) continue;
                 entryObj[entryMapValue] = entry.startTime
             }
-            const values = Object.values(entryObj)
-            if (!values.every(t => !!t)) return
             notify(BrowserEventType.Performance, entryObj)
             observer.disconnect()
         }
@@ -43,7 +41,12 @@ export const performance_plugin: Plugin<BrowserClient> = {
         // buffered 属性表示是否观察缓存数据，也就是说观察代码添加时机比事情触发时机晚也没关系。
         // largest-contentful-paint LCP 是最大内容渲染完成时触发
         // paint  FCP 只要任意内容绘制完成就触发
-        observer.observe({ entryTypes: ['paint', 'largest-contentful-paint'], buffered: true })
+        if ("entryTypes" in observer) {
+            observer.observe({ entryTypes: ['paint', 'largest-contentful-paint'], buffered: true })
+        } else {
+            observer.observe({ type: 'paint', buffered: true })
+            observer.observe({ type: 'largest-contentful-paint', buffered: true })
+        }
     },
     transform(data: Result): PerformanceType {
         return {

@@ -1,7 +1,7 @@
 {
   "name": "@motojs_sdk/shared",
   "private": false,
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "",
   "main": "dist/packages/shared/src/index.mjs",
   "types": "dist/packages/shared/src/index.d.ts",
