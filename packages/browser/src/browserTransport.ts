@@ -4,17 +4,22 @@ import { _global } from "@motojs_sdk/shared";
 import { BaseOptionsType } from "@motojs_sdk/types";
 import { getLocationHref, getTimestamp, safeStringify } from "@motojs_sdk/utils";
 import { newRequestIdleCallback } from "./utils";
+import { BrowserFe } from "./browserFe";
 
 export class BrowserTransport extends BaseTransport {
-    constructor(options: BaseOptionsType) {
+    private fe: BrowserFe
+    constructor(options: BaseOptionsType, fe: BrowserFe) {
         super()
+        this.fe = fe
         this.bindOptions(options.key, options.dsn)
     }
 
     sendToServer(data: any, type: "image" | "sendBeacon" | "request", method: "GET" | "POST"): void {
         const time = getTimestamp()
         const location = getLocationHref()
-        const newData = { key: this.key, time, location, result: data }
+        const feId = this.fe.getFeId()
+        const feFrom = this.fe.getFeFrom()
+        const newData = { key: this.key, time, location, result: data, feId, feFrom }
         const stringifyData = encodeURIComponent(safeStringify(newData))
         const work = (deadline?: IdleDeadline) => {
             if (!deadline || deadline.timeRemaining() > 1) {

@@ -12,7 +12,7 @@ export const history_route_plugin: Plugin<BrowserClient> = {
     name: BrowserEventType.HistoryRoute,
     monitor(notify) {
         if (!supportsHistory()) return
-        let lastHref: string
+        let lastHref: string = getLocationHref()
         const oldOnpopstate = window.onpopstate
         window.onpopstate = function (this: any, ...args: any) {
             const to = getLocationHref()

@@ -6,8 +6,10 @@ import { behavior_stack_name } from "@motojs_sdk/shared";
 import { getLocationHref, getTimestamp, nativeTryCatch, on, safeStringify } from "@motojs_sdk/utils";
 import { IndexedDBCache } from "./indexedDBCache";
 import { newRequestIdleCallback } from "./utils";
+import { BrowserFe } from "./browserFe";
 
 export class BrowserBreadcrumb extends BaseBreadcrumb {
+    private fe: BrowserFe
     private db: IndexedDBCache = new IndexedDBCache({
         dbName: 'motojs_sdk',
         tableName: behavior_stack_name,
@@ -15,8 +17,9 @@ export class BrowserBreadcrumb extends BaseBreadcrumb {
     private loc = (_global as unknown as { localStorage: WindowLocalStorage['localStorage'] }).localStorage || null
     transport: BrowserTransport
 
-    constructor(options: BaseOptionsType, transport: BrowserTransport) {
+    constructor(options: BaseOptionsType, transport: BrowserTransport, fe: BrowserFe) {
         super()
+        this.fe = fe
         this.transport = transport
         this.bindConfig(options.maxStackLen)
         this.init()
@@ -27,7 +30,9 @@ export class BrowserBreadcrumb extends BaseBreadcrumb {
             if (!deadline || deadline?.timeRemaining() > 2) {
                 const triggerTime = getTimestamp()
                 const triggerUrl = getLocationHref()
-                const item = { triggerTime, triggerUrl, ...t }
+                const tiggerFeId = this.fe.getFeId()
+                const tiggerFeFrom = this.fe.getFeFrom()
+                const item = { triggerTime, triggerUrl, tiggerFeId, tiggerFeFrom, ...t }
                 if (this.db.hasIndexedDB()) {
                     this.indexedDBHandler(item)
                     return
